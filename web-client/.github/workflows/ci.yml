@@ -1,0 +1,19 @@
+name: Web Client CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check HTML validity (basic)
+        run: |
+          npx html-validate index.html
+      - name: Build Docker image
+        run: docker build -t web-client .
